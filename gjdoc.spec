@@ -7,24 +7,25 @@
 
 Summary:                GNU Javadoc
 Name:                   gjdoc
-Version:                0.7.7
-Release:                %mkrel 14.2
+Version:                0.7.8
+Release:                %mkrel 1
 Epoch:                  0
 License:                GPL
 Group:                  Development/Java
 URL:                    http://savannah.gnu.org/projects/classpath/
-Source0:                ftp://ftp.gnu.org/gnu/classpath/gjdoc-%{version}.tar.bz2
+Source0:                ftp://ftp.gnu.org/gnu/classpath/gjdoc-%{version}.tar.gz
+Source1:                ftp://ftp.gnu.org/gnu/classpath/gjdoc-%{version}.tar.gz.sig
 Patch0:                 %{name}-fix-control-z.patch
 Patch1:                 %{name}-rm-timestamp.patch
 Patch2:                 %{name}-consistent-html.patch
-Patch3:			gjdoc-fix-bootclasspath-option.patch
+Patch3:                 %{name}-fix-bootclasspath-option.patch
 Requires:               antlr
 Requires:               jaxp_parser_impl
 Requires:               jaxp_transform_impl
 Requires:               java >= 0:1.4.2
 Requires:               jpackage-utils
-Requires(post):         /sbin/install-info
-Requires(preun):        /sbin/install-info
+Requires(post):         info-install
+Requires(preun):        info-install
 %if %{gcj_support}
 Requires(post):         java-gcj-compat
 Requires(postun):       java-gcj-compat
@@ -83,7 +84,7 @@ export JAVADOC=%{javadoc}
 %{_bindir}/chrpath -d %{buildroot}%{_bindir}/gjdoc
 %endif
 
-%{__rm} -f %{buildroot}%{_datadir}/info/dir
+%{__rm} %{buildroot}%{_datadir}/info/dir
 
 pushd %{buildroot}%{_javadir}
 %{__ln_s} com-sun-javadoc-%{version}.jar com-sun-javadoc.jar
@@ -102,24 +103,19 @@ popd
 %post
 %{update_gcjdb}
 %endif
-
-%if 0
 %_install_info gjdoc.info
-%endif
 
 %if %{gcj_support}
 %postun
 %{clean_gcjdb}
 %endif
 
-%if 0
 %preun
 %_remove_install_info gjdoc.info
-%endif
 
 %files
 %defattr(-,root,root)
-%doc README
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %{_bindir}/gjdoc
 %{_javadir}/com-sun-javadoc-%{version}.jar
 %{_javadir}/com-sun-tools-doclets-Taglet-%{version}.jar
@@ -148,5 +144,3 @@ popd
 %endif
 %{_infodir}/gjdoc.info*
 %{_mandir}/man1/gjdoc*
-
-
