@@ -84,8 +84,6 @@ export JAVADOC=%{javadoc}
 %{_bindir}/chrpath -d %{buildroot}%{_bindir}/gjdoc
 %endif
 
-%{__rm} %{buildroot}%{_datadir}/info/dir
-
 pushd %{buildroot}%{_javadir}
 %{__ln_s} com-sun-javadoc-%{version}.jar com-sun-javadoc.jar
 %{__ln_s} com-sun-tools-doclets-Taglet-%{version}.jar com-sun-tools-doclets-Taglet.jar
