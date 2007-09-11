@@ -8,7 +8,7 @@
 Summary:                GNU Javadoc
 Name:                   gjdoc
 Version:                0.7.8
-Release:                %mkrel 2
+Release:                %mkrel 3
 Epoch:                  0
 License:                GPL
 Group:                  Development/Java
@@ -101,7 +101,9 @@ popd
 %post
 %{update_gcjdb}
 %endif
+%if 0
 %_install_info gjdoc.info
+%endif
 
 %if %{gcj_support}
 %postun
@@ -109,7 +111,9 @@ popd
 %endif
 
 %preun
+%if 0
 %_remove_install_info gjdoc.info
+%endif
 
 %files
 %defattr(-,root,root)
