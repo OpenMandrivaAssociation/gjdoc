@@ -8,7 +8,7 @@
 Summary:                GNU Javadoc
 Name:                   gjdoc
 Version:                0.7.8
-Release:                %mkrel 3
+Release:                %mkrel 4
 Epoch:                  0
 License:                GPL
 Group:                  Development/Java
@@ -27,8 +27,6 @@ Requires:               jpackage-utils
 Requires(post):         info-install
 Requires(preun):        info-install
 %if %{gcj_support}
-Requires(post):         java-gcj-compat
-Requires(postun):       java-gcj-compat
 BuildRequires:          java-gcj-compat-devel
 %else
 %if %without native
