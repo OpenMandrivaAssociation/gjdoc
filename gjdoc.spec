@@ -8,7 +8,7 @@
 Summary:                GNU Javadoc
 Name:                   gjdoc
 Version:                0.7.8
-Release:                %mkrel 4
+Release:                %mkrel 5
 Epoch:                  0
 License:                GPL
 Group:                  Development/Java
@@ -38,7 +38,7 @@ BuildRequires:          chrpath
 BuildRequires:          java-devel >= 0:1.4.2
 BuildRequires:          jaxp_parser_impl
 BuildRequires:          jaxp_transform_impl
-BuildRequires:          jpackage-utils
+BuildRequires:          java-rpmbuild
 BuildRoot:              %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
