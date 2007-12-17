@@ -39,7 +39,6 @@ BuildRequires:          java-devel >= 0:1.4.2
 BuildRequires:          jaxp_parser_impl
 BuildRequires:          jaxp_transform_impl
 BuildRequires:          java-rpmbuild
-BuildRoot:              %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 A documentation generation system for "javadoc"-style comments.
