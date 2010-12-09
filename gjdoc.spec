@@ -8,7 +8,7 @@
 Summary:                GNU Javadoc
 Name:                   gjdoc
 Version:                0.7.9
-Release:                %mkrel 3
+Release:                %mkrel 4
 Epoch:                  0
 License:                GPL
 Group:                  Development/Java
