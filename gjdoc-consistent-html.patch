@@ -1,0 +1,30 @@
+Index: src/gnu/classpath/tools/doclets/htmldoclet/HtmlDoclet.java
+===================================================================
+RCS file: /sources/classpath/gjdoc/src/gnu/classpath/tools/doclets/htmldoclet/HtmlDoclet.java,v
+retrieving revision 1.63
+diff -u -r1.63 HtmlDoclet.java
+--- src/gnu/classpath/tools/doclets/htmldoclet/HtmlDoclet.java	4 Nov 2006 22:15:52 -0000	1.63
++++ src/gnu/classpath/tools/doclets/htmldoclet/HtmlDoclet.java	6 Nov 2006 19:03:48 -0000
+@@ -1831,14 +1831,16 @@
+ 
+       Map packageToUsageTypeMap = getUsageOfClass(classDoc);
+       if (null != packageToUsageTypeMap && !packageToUsageTypeMap.isEmpty()) {
++    	  
++         Object[] packages = packageToUsageTypeMap.keySet().toArray();
++         // ensure that the html we generate is consistent
++         java.util.Arrays.sort(packages);
++         for (int i = 0; i < packages.length; i++) {
++            PackageDoc currentPackage = (PackageDoc) packages[i];
+ 
+-         Iterator packagesIterator = packageToUsageTypeMap.keySet().iterator();
+-         while (packagesIterator.hasNext()) {
+-            PackageDoc packageDoc = (PackageDoc)packagesIterator.next();
++            output.div(CssClass.USAGE_PACKAGE_TITLE, "Uses in package " + currentPackage.name());
+ 
+-            output.div(CssClass.USAGE_PACKAGE_TITLE, "Uses in package " + packageDoc.name());
+-
+-            Map usageTypeToUsersMap = (Map)packageToUsageTypeMap.get(packageDoc);
++            Map usageTypeToUsersMap = (Map)packageToUsageTypeMap.get(currentPackage);
+             Iterator usageTypeIterator = usageTypeToUsersMap.keySet().iterator();
+             while (usageTypeIterator.hasNext()) {
+                UsageType usageType = (UsageType)usageTypeIterator.next();

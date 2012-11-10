@@ -1,0 +1,15 @@
+--- gjdoc-0.7.7/src/gnu/classpath/tools/gjdoc/Parser.java.sav	2006-01-25 18:51:45.646386000 -0500
++++ gjdoc-0.7.7/src/gnu/classpath/tools/gjdoc/Parser.java	2006-01-25 18:51:55.264757000 -0500
+@@ -627,10 +627,10 @@
+       return this.addComments;
+    }
+ 
+-   public static final String WHITESPACE=" \t\r\n";
++   public static final String WHITESPACE=" \t\r\n";
+ 
+    public static final boolean isWhitespace(char c) {
+-      return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '');
++      return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '' || c == '');
+       //return WHITESPACE.indexOf(c)>=0; 
+    }
+ 

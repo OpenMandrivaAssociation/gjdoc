@@ -1,0 +1,133 @@
+Index: src/gnu/classpath/tools/doclets/htmldoclet/HtmlDoclet.java
+===================================================================
+RCS file: /sources/classpath/gjdoc/src/gnu/classpath/tools/doclets/htmldoclet/HtmlDoclet.java,v
+retrieving revision 1.62
+diff -u -r1.62 HtmlDoclet.java
+--- src/gnu/classpath/tools/doclets/htmldoclet/HtmlDoclet.java	30 Nov 2005 21:23:47 -0000	1.62
++++ src/gnu/classpath/tools/doclets/htmldoclet/HtmlDoclet.java	14 Jul 2006 22:24:47 -0000
+@@ -21,68 +21,65 @@
+ package gnu.classpath.tools.doclets.htmldoclet;
+ 
+ import gnu.classpath.tools.IOToolkit;
+-
++import gnu.classpath.tools.StringToolkit;
+ import gnu.classpath.tools.doclets.AbstractDoclet;
+ import gnu.classpath.tools.doclets.DocletConfigurationException;
+ import gnu.classpath.tools.doclets.DocletOption;
+ import gnu.classpath.tools.doclets.DocletOptionFile;
+ import gnu.classpath.tools.doclets.DocletOptionFlag;
+ import gnu.classpath.tools.doclets.DocletOptionString;
++import gnu.classpath.tools.doclets.InlineTagRenderer;
+ import gnu.classpath.tools.doclets.PackageGroup;
+ import gnu.classpath.tools.doclets.TagletPrinter;
+-import gnu.classpath.tools.doclets.InlineTagRenderer;
+-
+ import gnu.classpath.tools.doclets.xmldoclet.HtmlRepairer;
+-
++import gnu.classpath.tools.java2xhtml.Java2xhtml;
+ import gnu.classpath.tools.taglets.GnuExtendedTaglet;
+ import gnu.classpath.tools.taglets.TagletContext;
+ 
+-import gnu.classpath.tools.java2xhtml.Java2xhtml;
+-
+-import gnu.classpath.tools.StringToolkit;
+-
+-import com.sun.javadoc.*;
+-import com.sun.tools.doclets.Taglet;
+-
+-import java.io.ByteArrayInputStream;
+ import java.io.File;
+ import java.io.FileInputStream;
+ import java.io.FileNotFoundException;
+ import java.io.FileOutputStream;
+ import java.io.FileReader;
+-import java.io.FileWriter;
++import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.InputStreamReader;
+-import java.io.IOException;
+ import java.io.OutputStreamWriter;
+ import java.io.PrintWriter;
+ import java.io.StringWriter;
+-
+-import java.net.MalformedURLException;
+-
+ import java.nio.charset.Charset;
+-
+-import java.text.DateFormat;
+ import java.text.MessageFormat;
+-
+-import java.util.Arrays;
+-import java.util.Calendar;
+ import java.util.Collection;
+-import java.util.Date;
+ import java.util.HashMap;
+ import java.util.Iterator;
+ import java.util.LinkedHashSet;
+ import java.util.LinkedList;
+ import java.util.List;
+ import java.util.ListIterator;
+-import java.util.Locale;
+ import java.util.Map;
+ import java.util.Properties;
+ import java.util.Set;
+ import java.util.SortedSet;
+-import java.util.TimeZone;
+ import java.util.TreeSet;
+ 
++import com.sun.javadoc.ClassDoc;
++import com.sun.javadoc.ConstructorDoc;
++import com.sun.javadoc.Doc;
++import com.sun.javadoc.ExecutableMemberDoc;
++import com.sun.javadoc.FieldDoc;
++import com.sun.javadoc.MemberDoc;
++import com.sun.javadoc.MethodDoc;
++import com.sun.javadoc.PackageDoc;
++import com.sun.javadoc.ParamTag;
++import com.sun.javadoc.Parameter;
++import com.sun.javadoc.ProgramElementDoc;
++import com.sun.javadoc.SeeTag;
++import com.sun.javadoc.Tag;
++import com.sun.javadoc.ThrowsTag;
++import com.sun.javadoc.Type;
++import com.sun.javadoc.TypeVariable;
++import com.sun.tools.doclets.Taglet;
++
+ public class HtmlDoclet
+    extends AbstractDoclet
+    implements InlineTagRenderer
+@@ -1644,14 +1641,6 @@
+       output.beginAnchor("http://www.gnu.org/software/classpath/cp-tools/", "", "_top");
+       output.print("GNU Classpath Tools");
+       output.endAnchor();
+-      output.print(", on ");
+-      DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,
+-							 DateFormat.LONG,
+-							 Locale.US);
+-      Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"),
+-					  Locale.US);
+-      format.setCalendar(cal);
+-      output.print(format.format(new Date()));
+       output.print(".");
+       output.endDiv(CssClass.ABOUT_GENERATOR);
+ 
+@@ -3836,12 +3832,15 @@
+    public void writeGjdocProperties(File outputFile)
+       throws IOException
+    {
+-      Properties properties = new Properties();
+-      properties.setProperty("gjdoc.version", getDocletVersion());
+-      properties.setProperty("gjdoc.compat", Boolean.toString(isJavadocCompatibleNames()));
++	   // we're not using Properties.store() because it writes a timestamp
++      String comment = "#GNU Gjdoc API Documentation Set Descriptor\n";
++      String version = "gjdoc.version=" + getDocletVersion() + "\n";
++      String compat = "gjdoc.compat=" + Boolean.toString(isJavadocCompatibleNames()) + "\n";
+ 
+       FileOutputStream out = new FileOutputStream(outputFile);
+-      properties.store(out, "GNU Gjdoc API Documentation Set Descriptor");
++      out.write(comment.getBytes("ISO-8859-1"), 0, comment.length());
++      out.write(version.getBytes("ISO-8859-1"), 0, version.length());
++      out.write(compat.getBytes("ISO-8859-1"), 0, compat.length());
+       out.close();
+    }
+ 
