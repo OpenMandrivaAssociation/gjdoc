@@ -110,7 +110,6 @@ popd
 
 %preun
 %if 0
-%_remove_install_info gjdoc.info
 %endif
 
 %files
