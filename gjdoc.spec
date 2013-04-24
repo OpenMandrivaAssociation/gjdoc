@@ -24,8 +24,6 @@ Requires:               jaxp_parser_impl
 Requires:               jaxp_transform_impl
 Requires:               java >= 0:1.4.2
 Requires:               jpackage-utils
-Requires(post):         info-install
-Requires(preun):        info-install
 %if %{gcj_support}
 BuildRequires:          java-gcj-compat-devel
 %else
@@ -39,7 +37,6 @@ BuildRequires:          java-devel >= 0:1.4.2
 BuildRequires:          jaxp_parser_impl
 BuildRequires:          jaxp_transform_impl
 BuildRequires:          java-rpmbuild
-BuildRoot:              %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 A documentation generation system for "javadoc"-style comments.
@@ -92,15 +89,9 @@ popd
 %{_bindir}/aot-compile-rpm
 %endif
 
-%clean
-%{__rm} -rf %{buildroot}
-
 %if %{gcj_support}
 %post
 %{update_gcjdb}
-%endif
-%if 0
-%_install_info gjdoc.info
 %endif
 
 %if %{gcj_support}
@@ -108,12 +99,7 @@ popd
 %{clean_gcjdb}
 %endif
 
-%preun
-%if 0
-%endif
-
 %files
-%defattr(-,root,root)
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %{_bindir}/gjdoc
 %{_javadir}/com-sun-javadoc-%{version}.jar
