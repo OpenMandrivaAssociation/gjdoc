@@ -12,7 +12,7 @@ Release:                6
 Epoch:                  0
 License:                GPL
 Group:                  Development/Java
-URL:                    http://savannah.gnu.org/projects/classpath/
+URL:                    https://savannah.gnu.org/projects/classpath/
 Source0:                ftp://ftp.gnu.org/gnu/classpath/gjdoc-%{version}.tar.gz
 Source1:                ftp://ftp.gnu.org/gnu/classpath/gjdoc-%{version}.tar.gz.sig
 Patch0:                 %{name}-fix-control-z.patch
