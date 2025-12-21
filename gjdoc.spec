@@ -25,6 +25,11 @@ Requires:               jaxp_transform_impl
 Requires:               java >= 0:1.4.2
 Requires:               jpackage-utils
 %if %{gcj_support}
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:          java-gcj-compat-devel
 %else
 %if %without native
